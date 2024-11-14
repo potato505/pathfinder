@@ -33,6 +33,9 @@ void print_paths(t_edge ** A, int N, int *a, char **list);
 char* need_extraspace(char* a);
 void print_str_error(char* str);
 int file_error(int argc, char *argv[]);
+void error_printint(int n);
+int error(char **path);
+int error_info(t_edge *edge, char **list, int n, char *first_line);
 
 #endif
 

@@ -34,7 +34,7 @@ t_edge** create_path_null(int n)
     return A;
 }
 
-t_edge* graph_copy(t_edge *a, t_edge *b, int count)
+t_edge* graph_copy(t_edge *a, t_edge *b, int count) 
 {
     for(int i = 0; i < count; i++)
     {
@@ -60,7 +60,7 @@ int found_edge(t_edge **A, int count, int j, int J, int *a, int N)
         {
             if(count == a[i])
             {
-                if(rovno(A[i][count], A[j][count])) ///сравнивать должны с предлагаюзим путем|, то есть нужен еще + параметр для него в фунцию
+                if(rovno(A[i][count], A[j][count]))
                 {
                     return 1;
                 }
@@ -69,8 +69,6 @@ int found_edge(t_edge **A, int count, int j, int J, int *a, int N)
     }
     return 0;
 }
-
-//нужен масив который отобразит, что в путь не доабвлются использоваемые элементы
 
 
 int have_edge(t_edge *A, t_edge B, int n)
@@ -115,4 +113,26 @@ void print_str_error(char* str)
 {
     write(2, str, mx_strlen(str));
 }
+
+void error_printint(int n)
+{
+    if(n < 0)
+    {
+        write(2, "-", 1);
+        n*=-1;
+    }
+    int i = 1, k;
+    while( n / i >= 10)
+    {
+        i = i * 10;
+    }
+    while(i != 0)
+    {
+        k = n / i;
+        k = k % 10 + 48;
+        i = i / 10;
+        write(2, &k, 1);
+    }    
+}
+
 

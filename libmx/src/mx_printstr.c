@@ -1,6 +1,5 @@
 #include "../inc/libmx.h"
 
-
 void mx_printstr(const char* s)
 {
     if(s == NULL)
