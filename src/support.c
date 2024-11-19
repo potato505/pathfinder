@@ -135,4 +135,41 @@ void error_printint(int n)
     }    
 }
 
+int have_core(t_edge A, t_edge B)
+{
+    return (!mx_strcmp(A.start, B.end) || !mx_strcmp(A.end, B.start)) || (!mx_strcmp(A.start, B.start) || !mx_strcmp(A.end, B.end));
+}
+
+int have_island(t_edge *A, t_edge B, int n)
+{
+    for(int i = 0; i < n - 1; i++)
+    {
+        if(have_core(A[i], B))
+        {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int mx_count_wordsn(const char *str, char c, int n)
+{
+    if(!str)    return -1;
+    int count = 0;
+    int t = 1;
+    for(int i = 0; str[i] != n; i++)
+    {
+        if(str[i] != c && t == 1)
+        {
+            count++;
+            t = 0;
+        }
+        if(str[i] == c)
+        {
+            t = 1;
+        }
+
+    }
+    return count;
+}
 

@@ -50,6 +50,16 @@ int error(char **path)
         int coma = 0;
         for(int j = 0; path[i][j] != '\0'; j++)
         {
+            if(coma == 0)
+            {
+                if(path[i][j] >= 48 && path[i][j] <= 57 )
+                {
+                    print_str_error("error: line ");
+                    error_printint(i + 1);
+                    print_str_error(" is not valid\n");
+                    return 1;
+                }
+            }
             if(coma > 0)
             {
                 if(path[i][j] < 48 || path[i][j] > 57 )

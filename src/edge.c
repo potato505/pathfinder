@@ -35,13 +35,13 @@ t_edge* create_edges(char **a)
 t_edge **create_graph(t_edge *edge, int n, int *N, int **a )
 {
     *N = 0;
-    *a = (int*)malloc(sizeof(int) * (n * n));
+    *a = (int*)malloc(sizeof(int) * (n * n * 2));
     for(int i = 0; i < (n * n); i++)
     {
         (*a)[i] = -1;
     }
-    t_edge **paths = (t_edge **)malloc(sizeof(t_edge *) * (n * n));
-    for(int i = 0 ; i < (n * n); i++)
+    t_edge **paths = (t_edge **)malloc(sizeof(t_edge *) * (n * n * 2));
+    for(int i = 0 ; i < (n * n * 2); i++)
     {
         paths[i] = (t_edge *)malloc(sizeof(t_edge) * (n));
     }
@@ -64,7 +64,7 @@ t_edge **create_graph(t_edge *edge, int n, int *N, int **a )
         }
         int J = *N -1;
        for(int new = 1; new; count++)
-       {  
+       {
         new = 0;
         for(int j = J; j < *N; j++)
         {
@@ -82,9 +82,8 @@ t_edge **create_graph(t_edge *edge, int n, int *N, int **a )
             }
             for(int t = 0; t < n; t++)
             {
-                if(!mx_strcmp(paths[j][count - 1].end, edge[t].start) && (*a)[j] == count - 1 && !have_edge(paths[j], edge[t], count))
+                if(!mx_strcmp(paths[j][count - 1].end, edge[t].start) && (*a)[j] == count - 1 && !have_edge(paths[j], edge[t], count) && !have_island(paths[j], edge[t], count))
                 {
-                    edge[t].use = 0;
                     new = 1;
                     (*a)[j] = count;
                     paths[j][count].start = mx_strnew(mx_strlen(edge[t].start));
@@ -93,7 +92,7 @@ t_edge **create_graph(t_edge *edge, int n, int *N, int **a )
                     paths[j][count].end = mx_strcpy(paths[j][count].end, edge[t].end);
                     paths[j][count].data = edge[t].data;
                 }
-                else if(!mx_strcmp(paths[j][count - 1].end, edge[t].end) && (*a)[j] == count - 1 && !have_edge(paths[j], edge[t], count))
+                else if(!mx_strcmp(paths[j][count - 1].end, edge[t].end) && (*a)[j] == count - 1 && !have_edge(paths[j], edge[t], count) && !have_island(paths[j], edge[t], count))
                 {
                     new = 1;
                     (*a)[j] = count;
@@ -103,9 +102,8 @@ t_edge **create_graph(t_edge *edge, int n, int *N, int **a )
                     paths[j][count].end = mx_strcpy(paths[j][count].end, edge[t].start);
                     paths[j][count].data = edge[t].data;
                 }
-                else if(!mx_strcmp(paths[j][count - 1].end, edge[t].start) && (*a)[j] == count && !have_edge(paths[j], edge[t], count))
+                else if(!mx_strcmp(paths[j][count - 1].end, edge[t].start) && (*a)[j] == count && !have_edge(paths[j], edge[t], count) && *N < (n * n) && !have_island(paths[j], edge[t], count))
                 {
-                    edge[t].use = 0;
                     new = 1;
                     (*a)[*N] = count;
                     paths[*N] = graph_copy(paths[*N], paths[j], count);
@@ -116,7 +114,7 @@ t_edge **create_graph(t_edge *edge, int n, int *N, int **a )
                     paths[*N][count].data = edge[t].data;
                     *N= *N + 1;
                 }
-                else if(!mx_strcmp(paths[j][count - 1].end, edge[t].end) && (*a)[j] == count && !have_edge(paths[j], edge[t], count))
+                else if(!mx_strcmp(paths[j][count - 1].end, edge[t].end) && (*a)[j] == count && !have_edge(paths[j], edge[t], count) && *N < (n * n) && !have_island(paths[j], edge[t], count))
                 {
                     new = 1;
                     (*a)[*N] = count;

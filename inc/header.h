@@ -36,6 +36,10 @@ int file_error(int argc, char *argv[]);
 void error_printint(int n);
 int error(char **path);
 int error_info(t_edge *edge, char **list, int n, char *first_line);
+int have_core(t_edge A, t_edge B);
+int have_island(t_edge *A, t_edge B, int n);
+char* shortchar_path(t_edge path, t_edge * A, int a);
+int mx_count_wordsn(const char *str, char c, int n);
 
 #endif
 
